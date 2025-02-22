@@ -9,7 +9,11 @@ export default function FetchApi() {
             const res = await fetch("https://jsonplaceholder.typicode.com/comments");
             const data = await res.json();
             console.log(data);
-            setData(data);
+            const updatedData = data.map(item => ({
+                ...item,
+                name: item.name.toUpperCase()
+            }));
+            setData(updatedData);
         } catch (err) {
             console.log(err);
         }
@@ -22,7 +26,7 @@ export default function FetchApi() {
     return (
         <div className='card-container'>
             {data.length > 0 ? (
-                data.slice(0, 50).map((crr, i) => ( // Limiting to 9 items for a cleaner grid
+                data.slice(0, 50).map((crr, i) => (
                     <div key={i} className='card'>
                         <h3>{crr.name}</h3>
                         <h5>{crr.email}</h5>
